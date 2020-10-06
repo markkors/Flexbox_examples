@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schaakbord</title>
+    <!--<link rel="stylesheet" href="css/blackandwhitepieces.css">-->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>-->
+    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
+
+    <script src="js/chess.js"></script>
+<style>
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .mainboard {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .toprow, .bottomrow {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainrow {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .chessboard {
+        display: flex;
+        flex-direction: column;
+        border: 10px solid brown;
+
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .item {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 75px;
+        height: 75px;
+        border: 1px solid black;
+        font-size: 4em;
+    }
+
+    .chessboard .row:nth-child(odd) .item:nth-child(even) {
+        background-color:saddlebrown;
+    }
+
+    .chessboard .row:nth-child(odd) .item:nth-child(odd) {
+        background-color:aqua;
+    }
+
+    .chessboard .row:nth-child(even) .item:nth-child(odd) {
+        background-color: saddlebrown;
+    }
+
+    .chessboard .row:nth-child(even) .item:nth-child(even) {
+        background-color:aqua;
+    }
+
+    /* gebruikt via Javascript om attribuut waarde in te stellen */
+    .item::after {
+        content:attr(piece);
+    }
+
+    .item:hover {
+        border: 1px solid yellow;
+    }
+
+    .toprow .letters {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .bottomrow .letters {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .letters {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        height: 30px;
+    }
+
+    .cijfers {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        width: 30px;
+    }
+
+
+    .letters > * {
+        width: 75px;
+        text-align: center;
+        font-size: 20px;
+        font-family: 'Signika', sans-serif;
+    }
+
+    .cijfers > * {
+        display: flex;
+        align-items: center;
+        height: 75px;
+        font-size: 20px;
+        font-family: 'Signika', sans-serif;
+    }
+
+
+    /* .white {
+         color: white;
+     }
+
+     .black {
+         color: black;
+     }*/
+
+    /*
+    .pawns > *::after {
+        content:'\265F';
+    }
+
+    .rook::after {
+    content: '\265C';
+    }
+
+    .night::after {
+        content: '\265E';
+    }
+
+    .bishop::after {
+        content: '\265D';
+    }
+
+    .king::after {
+        content: '\265A';
+    }
+
+    .queen::after {
+        content: '\265B';
+    }
+    */
+
+
+</style>
+
+    <script>
+        var chess = new Chess();
+
+
+
+        var cols = ['a','b','c','d','e','f','g','h'];
+        var selected;
+        var nextmove = false;
+        var active = "w";
+
+        function init() {
+            var pieces = document.querySelectorAll('.item');
+            var row = 1;
+            // we beginnen linksonder het bord :: A1
+            for(i=pieces.length-1;i >= 0;i--) {
+                pieces[i].setAttribute("id",cols[i % 8]+ row);
+
+                // De witte stukken
+
+                if(row == 1 || row == 2) {
+                    pieces[i].setAttribute("color","w");
+                }
+
+                if(row==1) {
+                    switch (cols[i % 8]) {
+                        case "a": case "h":
+                            // torens
+                            pieces[i].setAttribute("piece","\u{2656}");
+                            pieces[i].setAttribute("type","r");
+
+                            break;
+                        case "b": case "g":
+                            // paarden
+                            pieces[i].setAttribute("piece","\u{2658}");
+                            pieces[i].setAttribute("type","n");
+                            break;
+                        case "c": case "f":
+                            // lopers
+                            pieces[i].setAttribute("piece","\u{2657}");
+                            pieces[i].setAttribute("type","b");
+                            break;
+                        case "d":
+                            // koninging
+                            pieces[i].setAttribute("piece","\u{2655}");
+                            pieces[i].setAttribute("type","q");
+                            break;
+                        case "e":
+                            // koning
+                            pieces[i].setAttribute("piece","\u{2654}");
+                            pieces[i].setAttribute("type","k");
+                    }
+                }
+
+                if (row == 2) {
+                    // witte pionnen
+                    pieces[i].setAttribute("piece","\u{2659}");
+                    pieces[i].setAttribute("type","p");
+                }
+
+               // De  zwarte stukken
+
+                if(row == 7 || row == 8) {
+                    pieces[i].setAttribute("color","b");
+                }
+
+
+                if(row == 8) {
+                    switch (cols[i % 8]) {
+                        case "a": case "h":
+                            // torens
+                            pieces[i].setAttribute("piece","\u{265C}");
+                            pieces[i].setAttribute("type","n");
+                            break;
+                        case "b": case "g":
+                            // paarden
+                            pieces[i].setAttribute("piece","\u{265E}");
+                            pieces[i].setAttribute("type","n");
+                            break;
+                        case "c": case "f":
+                            // bishops
+                            pieces[i].setAttribute("piece","\u{265D}");
+                            pieces[i].setAttribute("type","b");
+                            break;
+                        case "d":
+                            // queen
+                            pieces[i].setAttribute("piece","\u{265B}");
+                            pieces[i].setAttribute("type","q");
+                            break;
+                        case "e":
+                            // queen
+                            pieces[i].setAttribute("piece","\u{265A}");
+                            pieces[i].setAttribute("type","k");
+                    }
+                }
+
+                if (row == 7) {
+                    // zwarte pionnen
+                    pieces[i].setAttribute("piece","\u{265F}");
+                    pieces[i].setAttribute("type","p");
+                }
+
+                if(i % 8 == 0) row++;
+                pieces[i].addEventListener("click",function (e) {
+                    selectPiece(e);
+                });
+            }
+        }
+
+        function selectPiece(e) {
+            switch (nextmove) {
+                case false:
+                    if (e.target.getAttribute("color") == active) {
+                        // select a piece
+                        selected = e.target;
+                        nextmove=true;
+                        document.getElementById(e.target.id).style.border='5px solid yellow';
+                    }
+                    break;
+                case true:
+
+                    var move = chess.move({from: selected.id, to: e.target.id});
+
+                    if(move==null) {
+                        alert('ongeldige zet!');
+                        return false;
+                    }
+
+                    switch (move.san) {
+                        case 'O-O-O':
+                            // lange rocade (queenside)
+                            switch(active) {
+                                case "w":
+                                    rook = document.getElementById('a1');
+                                    dest = document.getElementById('d1');
+                                    dest.setAttribute('piece',rook.getAttribute('piece'));
+                                    dest.setAttribute('type',rook.getAttribute('type'));
+                                    dest.setAttribute('color',rook.getAttribute('color'));
+                                    rook.setAttribute("piece","");
+                                    rook.setAttribute("type","");
+                                    rook.setAttribute("color","");
+                                    break;
+                                case "b":
+                                    rook = document.getElementById('h8');
+                                    dest = document.getElementById('e8');
+                                    dest.setAttribute('piece',rook.getAttribute('piece'));
+                                    dest.setAttribute('type',rook.getAttribute('type'));
+                                    dest.setAttribute('color',rook.getAttribute('color'));
+                                    rook.setAttribute("piece","");
+                                    rook.setAttribute("type","");
+                                    rook.setAttribute("color","");
+                            }
+                            break;
+
+                        case 'O-O':
+                            // korte rocade (kingside)
+                            switch(active) {
+                                case "w":
+                                    rook = document.getElementById('h1');
+                                    dest = document.getElementById('f1');
+                                    dest.setAttribute('piece',rook.getAttribute('piece'));
+                                    dest.setAttribute('type',rook.getAttribute('type'));
+                                    dest.setAttribute('color',rook.getAttribute('color'));
+                                    rook.setAttribute("piece","");
+                                    rook.setAttribute("type","");
+                                    rook.setAttribute("color","");
+                                    break;
+                                case "b":
+                                    rook = document.getElementById('a8');
+                                    dest = document.getElementById('c8');
+                                    dest.setAttribute('piece',rook.getAttribute('piece'));
+                                    dest.setAttribute('type',rook.getAttribute('type'));
+                                    dest.setAttribute('color',rook.getAttribute('color'));
+                                    rook.setAttribute("piece","");
+                                    rook.setAttribute("type","");
+                                    rook.setAttribute("color","");
+                            }
+                            break;
+                        default: // de andere moves
+
+
+                    } // move.san
+
+
+                    // verplaats het stuk
+                    e.target.setAttribute("piece",selected.getAttribute('piece'));
+                    e.target.setAttribute("type",selected.getAttribute('type'));
+                    e.target.setAttribute("color",selected.getAttribute('color'));
+
+                    selected.setAttribute("piece","");
+                    selected.setAttribute("type","");
+                    selected.setAttribute("color","");
+
+                    //console.log(chess.ascii());
+                    //console.log(move);
+
+                    // automate the next move
+                    var om = calculateRandomMove(chess);
+                    chess.move(om);
+                    buildBoard(chess.board());
+
+                    resetSelected();
+
+
+                    nextmove=false;
+                    /*
+
+                                        // zet de andere kleur actief
+                                        if(active=="w") {
+                                            active="b"
+                                        } else {
+                                            active="w";
+                                        };
+                    */
+
+                    break;
+            }
+
+        }
+
+        function resetSelected() {
+            var pieces = document.querySelectorAll('.item');
+            for (e of pieces) {
+                e.style.border=null;
+            }
+        }
+
+
+
+
+        var calculateRandomMove =function(game) {
+            //generate all the moves for a given position
+            var newGameMoves = game.moves();
+            // en kies er eentje random uit....
+            var r = Math.floor(Math.random() * newGameMoves.length);
+            return newGameMoves[r];
+        };
+
+        function buildBoard(board) {
+        console.log(board);
+            var pieces = document.querySelectorAll('.item');
+
+            // we beginnen linksboven het bord :: A8
+            var i=0;
+            for (r=0;r<board.length;r++) {
+                for(c=0;c<8;c++) {
+                   if(typeof board[r][c] !== 'undefined' && board[r][c] !== null) {
+                        pieces[i].setAttribute("type",board[r][c].type);
+                        pieces[i].setAttribute("color",board[r][c].color);
+                        pieces[i].setAttribute("piece",getPiece(board[r][c].color,board[r][c].type))
+
+                   } else {
+                       pieces[i].setAttribute("type","");
+                       pieces[i].setAttribute("color","");
+                       pieces[i].setAttribute("piece","");
+                   }
+                   i++;
+                }
+            }
+
+        }
+
+        function getPiece(c,t) {
+
+            var wp = {r: '\u{2656}',n:'\u{2658}',b:'\u{2657}',q:'\u{2655}',k:'\u{2654}',p:'\u{2659}'};
+            var bp = {r: '\u{265C}',n:'\u{265E}',b:'\u{265D}',q:'\u{265B}',k:'\u{265A}',p:'\u{265F}'};
+
+            switch (c) {
+                case "w":
+                    return wp[t];
+                    break;
+                case "b":
+                    return bp[t];
+                    break;
+            }
+
+
+
+        }
+    </script>
+
+
+</head>
+<body onload="init();">
+
+
+<div class="mainboard">
+    <div class="toprow">
+        <div class="letters">
+            <div>a</div>
+            <div>b</div>
+            <div>c</div>
+            <div>d</div>
+            <div>e</div>
+            <div>f</div>
+            <div>g</div>
+            <div>h</div>
+        </div>
+    </div>
+    <div class="mainrow">
+        <div class="cijfers">
+            <div>8</div>
+            <div>7</div>
+            <div>6</div>
+            <div>5</div>
+            <div>4</div>
+            <div>3</div>
+            <div>2</div>
+            <div>1</div>
+        </div>
+        <div class="chessboard">
+            <div class="row">
+                <div class="item rook"></div>
+                <div class="item night"></div>
+                <div class="item bishop"></div>
+                <div class="item queen"></div>
+                <div class="item king"></div>
+                <div class="item bishop"></div>
+                <div class="item knight"></div>
+                <div class="item rook"></div>
+            </div>
+            <div class="row pawns">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row pawns">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+
+            </div>
+            <div class="row">
+                <div class="item rook"></div>
+                <div class="item night"></div>
+                <div class="item bishop"></div>
+                <div class="item king"></div>
+                <div class="item queen"></div>
+                <div class="item bishop"></div>
+                <div class="item knight"></div>
+                <div class="item rook"></div>
+            </div>
+        </div>
+        <div class="cijfers">
+            <div>8</div>
+            <div>7</div>
+            <div>6</div>
+            <div>5</div>
+            <div>4</div>
+            <div>3</div>
+            <div>2</div>
+            <div>1</div>
+        </div>
+    </div>
+    <div class="bottomrow">
+        <div class="letters">
+            <div>a</div>
+            <div>b</div>
+            <div>c</div>
+            <div>d</div>
+            <div>e</div>
+            <div>f</div>
+            <div>g</div>
+            <div>h</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* de zwarte stukken */
+
+/* pionnen */
+.row:nth-child(2)  > *::after {
+    content:'\265F';
+}
+
+/* torens */
+.row:nth-child(1) div:nth-child(1)::after, .row:nth-child(1) div:nth-child(8)::after {
+    content: '\265C';
+}
+
+/* paarden */
+.row:nth-child(1) div:nth-child(2)::after, .row:nth-child(1) div:nth-child(7)::after {
+    content: '\265E';
+}
+
+/* lopers */
+.row:nth-child(1) div:nth-child(3)::after, .row:nth-child(1) div:nth-child(6)::after {
+    content: '\265D';
+}
+
+/* koningin */
+.row:nth-child(1) div:nth-child(4)::after {
+    content: '\265b';
+}
+
+/* koning */
+.row:nth-child(1) div:nth-child(5)::after {
+    content: '\265a';
+}
+
+/* de witte stukken */
+/* pionnen */
+.row:nth-child(7)  > *::after {
+    content:'\2659';
+}
+
+/* torens */
+.row:nth-child(8) div:nth-child(1)::after, .row:nth-child(8) div:nth-child(8)::after {
+    content: '\2656';
+}
+
+/* paarden */
+.row:nth-child(8) div:nth-child(2)::after, .row:nth-child(8) div:nth-child(7)::after {
+    content: '\2658';
+}
+
+/* lopers */
+.row:nth-child(8) div:nth-child(3)::after, .row:nth-child(8) div:nth-child(6)::after {
+    content: '\2657';
+}
+
+/* koningin */
+.row:nth-child(8) div:nth-child(4)::after {
+    content: '\2655';
+}
+
+/* koning */
+.row:nth-child(8) div:nth-child(5)::after {
+    content: '\2654';
+}

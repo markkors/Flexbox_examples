@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Justify content</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <style>
+
+        .flex-container1 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+
+        .flex-container2 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        .flex-container3 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .flex-container4 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .flex-container5 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .flex-item {
+            height: 100px;
+            width: 100px;
+            background-color: gray;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<h3>flexbox justify content flex-start</h3>
+<div class="flex-container1">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+</div>
+
+<h3>flexbox justify content flex-end</h3>
+<div class="flex-container2">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+</div>
+
+<h3>flexbox justify content center</h3>
+<div class="flex-container3">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+</div>
+
+<h3>flexbox justify content space-between</h3>
+<div class="flex-container4">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+</div>
+
+<h3>flexbox justify content space-around</h3>
+<div class="flex-container5">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+</div>
+
+</body>
+</html>

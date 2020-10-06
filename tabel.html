@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personeelsbestand</title>
+
+    <style>
+        body,html {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+
+        .tabel {
+            display: table;
+        }
+
+        .tabelrij,.tabelkop {
+            display:table-row;
+        }
+
+        .tabelitem {
+            display: table-cell;
+            border-bottom: 1px solid black;
+            padding-right: 50px;
+        }
+
+       .tabelkop {
+            font-weight: bold;
+        }
+
+       /* Hier je antwoord */
+
+        .tabelrij:nth-child(even) {
+            background-color:cornsilk;
+        }
+
+        .tabelrij:hover {
+            background-color:aqua;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="tabel">
+    <div class="tabelkop">
+        <div class="tabelitem"></div>
+        <div class="tabelitem">Voornaam</div>
+        <div class="tabelitem">Achternaam</div>
+        <div class="tabelitem">Functie</div>
+    </div>
+    <div class="tabelrij">
+        <div class="tabelitem">1</div>
+        <div class="tabelitem">Jan</div>
+        <div class="tabelitem">Jansen</div>
+        <div class="tabelitem">CEO</div>
+    </div>
+    <div class="tabelrij">
+        <div class="tabelitem">2</div>
+        <div class="tabelitem">Klaas</div>
+        <div class="tabelitem">van der Hoog</div>
+        <div class="tabelitem">Programmeur</div>
+    </div>
+    <div class="tabelrij">
+        <div class="tabelitem">3</div>
+        <div class="tabelitem">Marget</div>
+        <div class="tabelitem">Koolen</div>
+        <div class="tabelitem">Administratie</div>
+    </div>
+    <div class="tabelrij">
+        <div class="tabelitem">4</div>
+        <div class="tabelitem">Peter</div>
+        <div class="tabelitem">Brinkman</div>
+        <div class="tabelitem">Programmeur</div>
+    </div>
+</div>
+</body>
+</html>

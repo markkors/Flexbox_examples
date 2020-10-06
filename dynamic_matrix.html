@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamische matrix</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .vak {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            width: 50px;
+            height: 50px;
+            font-size: 35pt;
+        }
+
+        .vak::after{
+            content:attr(piece);
+        }
+
+        .container .row:nth-child(odd) .vak:nth-child(even) {
+            background-color: brown;
+        }
+
+        .container .row:nth-child(even) .vak:nth-child(odd) {
+            background-color: brown;
+        }
+
+    </style>
+<script>
+
+    letter = ['h','g','f','e','d','c','b','a']
+    pieceswhite = ['\u2656','\u2658','\u2657','\u2655','\u2654','\u2657','\u2658','\u2656'];
+    piecesblack= ['\u265C','\u265E','\u265D','\u265B','\u265A','\u265D','\u265E','\u265C'];
+
+
+
+    function init() {
+        var c = document.querySelector('.container');
+
+        for (r=0;r<8;r++) {
+            var re = document.createElement("div");
+            re.className="row";
+            for(item=0;item<8;item++) {
+                // bij r=0 / r = 1 / r = 7 / r = 8
+                var e = document.createElement("div");
+                e.className="vak";
+                e.setAttribute("id",letter[r] + (item));
+
+                if(r==7) {
+                    e.setAttribute("piece",pieceswhite[item]);
+                }
+
+                if(r==0) {
+                    e.setAttribute("piece",piecesblack[item]);
+                }
+
+                e.addEventListener("click",function(e) {
+                    console.log(e);
+                })
+                re.appendChild(e);
+            }
+            c.appendChild(re);
+
+
+
+        }
+
+
+    }
+
+</script>
+
+
+</head>
+
+
+<body onload="init();">
+
+    <div class="container">
+
+
+    </div>
+
+</body>
+</html>

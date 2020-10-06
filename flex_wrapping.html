@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flexbox wrapping</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 15px;
+            overflow: hidden;
+        }
+
+        .flex-container1 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            
+
+        }
+
+        .flex-container2 {
+            border: 1px solid black;
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .flex-item {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 100px;
+            background-color: gray;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<h3>flexbox nowrap (standaard)</h3>
+<div class="flex-container1">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+    <div class="flex-item">flex item e</div>
+    <div class="flex-item">flex item f</div>
+    <div class="flex-item">flex item g</div>
+    <div class="flex-item">flex item h</div>
+</div>
+
+<h3>flexbox row wrap</h3>
+<div class="flex-container2">
+    <div class="flex-item">flex item a</div>
+    <div class="flex-item">flex item b</div>
+    <div class="flex-item">flex item c</div>
+    <div class="flex-item">flex item d</div>
+    <div class="flex-item">flex item e</div>
+    <div class="flex-item">flex item f</div>
+    <div class="flex-item">flex item g</div>
+    <div class="flex-item">flex item h</div>
+</div>
+
+</body>
+</html>
